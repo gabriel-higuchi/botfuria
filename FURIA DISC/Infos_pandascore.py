@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import Flask, jsonify, request
 
 BASE_URL = 'https://api.pandascore.co'
-PANDASCORE_TOKEN = 'Seu_token_aqui'
+PANDASCORE_TOKEN = 'Seu_token'
 TEAM_NAME = 'FURIA'
 CSV_FILE = 'sugestoes.csv'
 running_matches = []
@@ -191,65 +191,6 @@ def exibir_proxima_partida_furia():
     else:
         return f"❌ Erro ao acessar a API: {response.status_code}"
 
-
-def get_player_stats_from_match(player_id, match_id):
-    # Primeiro, obtemos os detalhes da partida para encontrar o player_id
-    match_url = f"{BASE_URL}/csgo/matches/{match_id}"
-    headers = {
-        'Authorization': f'Bearer {PANDASCORE_TOKEN}'
-    }
-
-    try:
-        # Passo 1: Buscar informações da partida
-        match_response = requests.get(match_url, headers=headers)
-        match_response.raise_for_status()
-        match_data = match_response.json()
-
-        # Passo 2: Procurar o jogador nos times
-        player_id = None
-        player_nick = None
-        
-        for opponent in match_data.get('opponents', []):
-            team = opponent.get('team', {})
-            for player in team.get('players', []):
-                if (player_id.lower() in player.get('name', '').lower() or 
-                    player_id.lower() in player.get('first_name', '').lower() or
-                    player_id.lower() in player.get('last_name', '').lower()):
-                    
-                    player_id = player.get('id')
-                    player_nick = player.get('name')
-                    break
-            if player_id:
-                break
-
-        if not player_id:
-            return f"❌ Jogador '{player_id}' não encontrado nesta partida."
-
-        # Passo 3: Buscar estatísticas específicas do jogador
-        stats_url = f"{BASE_URL}/csgo/matches/{match_id}/players/{player_id}/stats"
-        stats_response = requests.get(stats_url, headers=headers)
-        stats_response.raise_for_status()
-        stats_data = stats_response.json()
-
-        # Formata a resposta
-        return (
-            f"📊 Estatísticas de **{player_nick}** na partida:\n"
-            f"• Kills: {stats_data.get('kills', 'N/A')}\n"
-            f"• Deaths: {stats_data.get('deaths', 'N/A')}\n"
-            f"• Assists: {stats_data.get('assists', 'N/A')}\n"
-            f"• Headshots: {stats_data.get('headshots', 'N/A')}\n"
-            f"• K/D Ratio: {stats_data.get('kd_ratio', 'N/A')}\n"
-            f"• Rating: {stats_data.get('rating', 'N/A')}\n"
-            f"• ADR: {stats_data.get('adr', 'N/A')}\n"
-            f"• KAST: {stats_data.get('kast', 'N/A')}%"
-        )
-
-    except requests.exceptions.RequestException as e:
-        return f"❌ Erro ao acessar a API: {str(e)}"
-    except Exception as e:
-        return f"❌ Erro inesperado: {str(e)}"
-    
-
     
 app = Flask(__name__)
 @app.route('/sugestao', methods=['POST'])
@@ -282,15 +223,6 @@ def get_next_match():
     response = exibir_proxima_partida_furia()
     return jsonify({'response': response})
 
-@app.route('/player_stats', methods=['GET'])
-def get_player_stats():
-    player_id = request.args.get('player_id')
-    match_id = request.args.get('match_id')
-    if player_id and match_id:
-        response = get_player_stats_from_match(player_id, match_id)
-        return jsonify({'response': response})
-    else:
-        return jsonify({'response': '❌ Parâmetros inválidos.'})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
