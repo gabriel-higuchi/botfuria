@@ -32,7 +32,7 @@ Crie um arquivo `.env` na raiz do projeto e adicione:
     PANDASCORE_API_KEY=sua_api_key_pandascore_aqui
 
 
-4. **Inicie o bot**
+4. **Inicie o bot**  
     npm start
 
 
