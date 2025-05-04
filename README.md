@@ -26,6 +26,8 @@ Este repositório contém o código de um **bot para o Discord** que interage co
 
 
 3. **Configure suas chaves**
+resgate a chave para o discord no site: https://discord.com/developers/docs/intro  
+resgate a chave para o pandascore no site: https://www.pandascore.co/  
 
 Crie um arquivo `.env` na raiz do projeto e adicione:  
     DISCORD_TOKEN=seu_token_discord_aqui  
