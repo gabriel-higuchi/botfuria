@@ -1,0 +1,105 @@
+📄 Arquivo de Documentação (DOCUMENTACAO.md)
+markdown
+# 📚 Documentação do Projeto FURIA CS:GO Bot
+
+Este projeto fornece informações sobre a equipe de CS:GO da FURIA através de:
+- Um servidor Flask (API)
+- Um bot para Discord
+- Um bot para WhatsApp
+
+## 📋 Pré-requisitos
+
+- Python 3.8+
+- Node.js 14+
+- Conta na PandaScore (token API)
+- Token de bot Discord
+- WhatsApp Business ou número pessoal para o bot
+
+## 🛠️ Configuração
+
+### 1. Instalação
+
+**Backend (Python):**
+```bash
+pip install -r requirements.txt
+WhatsApp Bot (Node.js):
+
+bash
+npm install whatsapp-web.js axios qrcode-terminal
+2. Configuração de Tokens
+Em Infos_pandascore.py:
+
+python
+PANDASCORE_TOKEN = 'seu_token_pandascore'
+Em main.py:
+
+python
+bot.run('seu_token_discord')
+🚀 Execução
+Servidor Flask (API):
+
+bash
+python Infos_pandascore.py
+Bot Discord (em outro terminal):
+
+bash
+python main.py
+Bot WhatsApp (em outro terminal):
+
+bash
+node index.js
+🌐 Endpoints da API
+Endpoint	Método	Descrição
+/lineup	GET	Retorna o lineup do time
+/last_matches	GET	Últimas 3 partidas da FURIA
+/next_match	GET	Próxima partida da FURIA
+/sugestao	POST	Armazena sugestões dos usuários
+🤖 Comandos dos Bots
+Discord (!comando)
+!lineup - Lineup da FURIA
+
+!partidas - Últimas 3 partidas
+
+!proxima - Próxima partida
+
+!sugestao [texto] - Envia sugestão
+
+!ajuda - Lista de comandos
+
+WhatsApp (!comando)
+!lineup [time] - Lineup (padrão: FURIA)
+
+!partidas - Últimas partidas
+
+!proxima - Próxima partida
+
+!sugestao [texto] - Envia sugestão
+
+!ajuda - Lista de comandos
+
+📂 Estrutura de Arquivos
+furia-csgo-bot/
+├── Infos_pandascore.py   # Servidor Flask
+├── main.py               # Bot Discord
+├── index.js              # Bot WhatsApp
+├── sugestoes.csv         # Armazena sugestões
+├── requirements.txt      # Dependências Python
+└── DOCUMENTACAO.md       # Este arquivo
+⚠️ Solução de Problemas
+Servidor não acessível:
+
+Verifique se o Flask está rodando (localhost:5000)
+
+Confira o firewall/redes
+
+Erros de autenticação:
+
+Valide os tokens da PandaScore e Discord
+
+Verifique permissões
+
+Bot WhatsApp não conecta:
+
+Escaneie novamente o QR code
+
+Verifique conexão com a internet
