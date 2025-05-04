@@ -62,6 +62,7 @@ git clone https://github.com/gabriel-higuchi/botfuriadiscwhats.git
 
 cd botfuriadiscwhats/FURIA WHATS  
 npm install
+Rode o infos_pandascore.py primeiro em outro terminal  
 
 
 3. **(Opcional) Configure um número de telefone**
